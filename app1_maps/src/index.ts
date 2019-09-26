@@ -1,14 +1,9 @@
 import { User } from './user';
 import { Company } from './company';
+import { CustomMap } from './customMap';
 
 console.log('hi there');
 const user = new User();
 const company = new Company();
 
-const map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 1,
-  center: {
-    lat: 0,
-    lng: 0
-  }
-});
+const map = new CustomMap(document.getElementById('map'));
