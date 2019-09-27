@@ -14,17 +14,10 @@ export class CustomMap {
     });
   }
 
-  addUserMarker(user: User) {
+  addMarker(hasLocation: User | Company) {
     new google.maps.Marker({
       map: this.googleMap,
-      position: user.location
-    });
-  }
-
-  addCompanyMarker(company: Company) {
-    new google.maps.Marker({
-      map: this.googleMap,
-      position: company.location
+      position: hasLocation.location
     });
   }
 }
