@@ -1,6 +1,7 @@
 import faker from 'faker';
+import { MapLocation } from './customMap';
 
-export class User {
+export class User implements MapLocation {
   name: string;
   location: {
     lat: number;
