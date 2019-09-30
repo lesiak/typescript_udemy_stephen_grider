@@ -1,8 +1,9 @@
-interface HasLocation {
+interface MapLocation {
   location: {
     lat: number;
     lng: number;
   };
+  markerContent(): string;
 }
 
 export class CustomMap {
@@ -18,15 +19,15 @@ export class CustomMap {
     });
   }
 
-  addMarker(hasLocation: HasLocation) {
+  addMarker(mapLocation: MapLocation) {
     const marker = new google.maps.Marker({
       map: this.googleMap,
-      position: hasLocation.location
+      position: mapLocation.location
     });
 
     marker.addListener('click', () => {
       const infoWindow = new google.maps.InfoWindow({
-        content: 'Hi there'
+        content: mapLocation.markerContent()
       });
       infoWindow.open(this.googleMap, marker);
     });
