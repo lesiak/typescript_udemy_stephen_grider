@@ -19,9 +19,16 @@ export class CustomMap {
   }
 
   addMarker(hasLocation: HasLocation) {
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: this.googleMap,
       position: hasLocation.location
+    });
+
+    marker.addListener('click', () => {
+      const infoWindow = new google.maps.InfoWindow({
+        content: 'Hi there'
+      });
+      infoWindow.open(this.googleMap, marker);
     });
   }
 }
