@@ -1,25 +1,29 @@
 import { SortableCollection } from './sorter';
 
 export class CharactersCollection implements SortableCollection {
-  constructor(public data: string) {}
+  private characters: string[];
+
+  constructor(data: string) {
+    this.characters = data.split('');
+  }
 
   compare(leftIndex: number, rightIndex: number): boolean {
-    const leftItem = this.data[leftIndex].toLowerCase();
-    const rightItem = this.data[rightIndex].toLowerCase();
+    const leftItem = this.characters[leftIndex].toLowerCase();
+    const rightItem = this.characters[rightIndex].toLowerCase();
     return leftItem > rightItem;
   }
 
   swap(leftIndex: number, rightIndex: number): void {
-    const characters = this.data.split('');
-
-    const leftHand = characters[leftIndex];
-    characters[leftIndex] = characters[rightIndex];
-    characters[rightIndex] = leftHand;
-
-    this.data = characters.join('');
+    const leftHand = this.characters[leftIndex];
+    this.characters[leftIndex] = this.characters[rightIndex];
+    this.characters[rightIndex] = leftHand;
   }
 
   get length(): number {
     return this.data.length;
+  }
+
+  get data() {
+    return this.characters.join('');
   }
 }
