@@ -7,11 +7,11 @@ const matches = fs
   .split('\n')
   .map((row: string): string[] => row.split(','));
 
-const MatchResult = {
-  HomeWin: 'H',
-  AwayWin: 'A',
-  Draw: 'D'
-};
+enum MatchResult {
+  HomeWin = 'H',
+  AwayWin = 'A',
+  Draw = 'D'
+}
 
 let manUnitedWins = 0;
 for (let match of matches) {
