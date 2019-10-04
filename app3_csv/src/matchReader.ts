@@ -1,8 +1,7 @@
 import { dateStringToDate } from './utils';
 import { MatchResult } from './matchResult';
 import { DataReader } from './dataReader';
-
-type MatchData = [Date, string, string, number, number, MatchResult, string];
+import { MatchData } from './matchData';
 
 export class MatchReader {
   constructor(private dataReader: DataReader) {}
