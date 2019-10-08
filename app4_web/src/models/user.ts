@@ -20,7 +20,7 @@ export class User {
     this.attributes = new Attributes(data);
   }
 
-  get(propName: string): number | string {
+  get<K extends keyof UserProps>(propName: K): UserProps[K] {
     return this.attributes.get(propName);
   }
 
