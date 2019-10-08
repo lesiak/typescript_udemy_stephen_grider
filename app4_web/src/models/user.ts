@@ -1,7 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
 import { Eventing, Callback } from './eventing';
+import { Sync } from './sync';
+import { AxiosResponse } from 'axios';
 
-interface UserProps {
+const rootUrl = 'http://localhost:3000/users';
+
+export interface UserProps {
   id?: number;
   name?: string;
   age?: number;
@@ -9,6 +12,7 @@ interface UserProps {
 
 export class User {
   private events: Eventing = new Eventing();
+  private sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
 
   constructor(private data: UserProps) {}
 
@@ -29,19 +33,12 @@ export class User {
   }
 
   fetch(): void {
-    axios
-      .get(`http://localhost:3000/users/${this.get('id')}`)
-      .then((response: AxiosResponse): void => {
-        this.set(response.data);
-      });
+    this.sync.fetch(this.data.id).then((response: AxiosResponse): void => {
+      this.set(response.data);
+    });
   }
 
   save(): void {
-    const id = this.get('id');
-    if (id) {
-      axios.put(`http://localhost:3000/users/${id}`, this.data);
-    } else {
-      axios.post('http://localhost:3000/users', this.data);
-    }
+    this.sync.save(this.data);
   }
 }
