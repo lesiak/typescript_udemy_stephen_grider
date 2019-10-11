@@ -1,6 +1,6 @@
-import { Eventing, Callback } from './eventing';
-import { Sync } from './sync';
-import { AxiosResponse } from 'axios';
+import { SimpleEventing, Callback } from './simpleEventing';
+import { ApiSync } from './apiSync';
+import { AxiosResponse, AxiosPromise } from 'axios';
 import { Attributes } from './attributes';
 
 const rootUrl = 'http://localhost:3000/users';
@@ -10,11 +10,26 @@ export interface UserProps {
   name?: string;
   age?: number;
 }
+export interface Eventing {
+  on(eventName: string, callback: Callback): void;
+  trigger(eventName: string): void;
+}
+
+export interface Sync<T> {
+  fetch(id: number): AxiosPromise;
+  save(data: T): AxiosPromise;
+}
+
+export interface ModelAttributes<T> {
+  get<K extends keyof T>(key: K): T[K];
+  getAll(): T;
+  set(update: T): void;
+}
 
 export class User {
-  private events: Eventing = new Eventing();
-  private sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
-  private attributes: Attributes<UserProps>;
+  private events: Eventing = new SimpleEventing();
+  private sync: Sync<UserProps> = new ApiSync<UserProps>(rootUrl);
+  private attributes: ModelAttributes<UserProps>;
 
   constructor(data: UserProps) {
     this.attributes = new Attributes(data);
