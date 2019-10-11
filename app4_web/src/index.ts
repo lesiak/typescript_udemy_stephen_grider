@@ -7,5 +7,8 @@ user.on('change', () => {
   console.log(user);
 });
 user.set({ name: 'Jim' });
-//const userNew = new User({ name: 'Jim', age: 55 });
-//userNew.save();
+const user2 = new User({ id: 2 });
+user2.on('change', () => {
+  console.log(user2);
+});
+user2.fetch();

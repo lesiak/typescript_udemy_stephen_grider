@@ -38,7 +38,11 @@ export class User {
   }
 
   fetch(): void {
-    this.sync.fetch(this.get('id')).then((response: AxiosResponse): void => {
+    const id = this.get('id');
+    if (typeof id !== 'number') {
+      throw new Error(`Cannot fetch, invalid id format, id: ${id}`);
+    }
+    this.sync.fetch(id).then((response: AxiosResponse): void => {
       this.set(response.data);
     });
   }
