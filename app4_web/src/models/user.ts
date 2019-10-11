@@ -1,6 +1,7 @@
 import { Eventing, Callback } from './eventing';
 import { Sync } from './sync';
 import { AxiosResponse } from 'axios';
+import { Attributes } from './attributes';
 
 const rootUrl = 'http://localhost:3000/users';
 
@@ -13,15 +14,18 @@ export interface UserProps {
 export class User {
   private events: Eventing = new Eventing();
   private sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+  private attributes: Attributes<UserProps>;
 
-  constructor(private data: UserProps) {}
+  constructor(data: UserProps) {
+    this.attributes = new Attributes(data);
+  }
 
   get(propName: string): number | string {
-    return this.data[propName];
+    return this.attributes.get(propName);
   }
 
   set(update: UserProps): void {
-    Object.assign(this.data, update);
+    this.attributes.set(update);
   }
 
   on(eventName: string, callback: Callback): void {
@@ -33,12 +37,12 @@ export class User {
   }
 
   fetch(): void {
-    this.sync.fetch(this.data.id).then((response: AxiosResponse): void => {
+    this.sync.fetch(this.get('id')).then((response: AxiosResponse): void => {
       this.set(response.data);
     });
   }
 
   save(): void {
-    this.sync.save(this.data);
+    this.sync.save(this.attributes.getAll());
   }
 }
