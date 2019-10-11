@@ -26,6 +26,7 @@ export class User {
 
   set(update: UserProps): void {
     this.attributes.set(update);
+    this.trigger('change');
   }
 
   on(eventName: string, callback: Callback): void {
