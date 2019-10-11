@@ -1,6 +1,8 @@
+import { Eventing } from './model';
+
 export type Callback = () => void;
 
-export class SimpleEventing {
+export class SimpleEventing implements Eventing {
   private events: { [key: string]: Callback[] } = {};
 
   on(eventName: string, callback: Callback): void {
