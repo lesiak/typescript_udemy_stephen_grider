@@ -20,8 +20,8 @@ export class User {
     this.attributes = new Attributes(data);
   }
 
-  get<K extends keyof UserProps>(propName: K): UserProps[K] {
-    return this.attributes.get(propName);
+  get get(): <K extends keyof UserProps>(key: K) => UserProps[K] {
+    return this.attributes.get;
   }
 
   set(update: UserProps): void {
