@@ -1,7 +1,7 @@
 import { User } from './models/user';
 import { UserForm } from './views/userForm';
 
-// const user = User.buildUser({ id: 1, name: 'John', age: 50 });
+const user = User.buildUser({ id: 1, name: 'John', age: 50 });
 
 // console.log(user.get('name'));
 // user.on('change', () => {
@@ -20,5 +20,5 @@ import { UserForm } from './views/userForm';
 // });
 // collection.fetch();
 
-const userForm = new UserForm(document.getElementById('root'));
+const userForm = new UserForm(document.getElementById('root'), user);
 userForm.render();
