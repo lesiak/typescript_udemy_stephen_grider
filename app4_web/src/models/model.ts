@@ -1,13 +1,12 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
-import { Callback, SimpleEventing } from './simpleEventing';
-import { ApiSync } from './apiSync';
-import { Attributes } from './attributes';
 
 export interface ModelAttributes<T extends HasId> {
   get<K extends keyof T>(key: K): T[K];
   getAll(): T;
   set(update: T): void;
 }
+
+export type Callback = () => void;
 
 export interface Eventing {
   on(eventName: string, callback: Callback): void;
