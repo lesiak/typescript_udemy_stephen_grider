@@ -2,6 +2,7 @@ import { SimpleEventing } from './simpleEventing';
 import { ApiSync } from './apiSync';
 import { Attributes } from './attributes';
 import { Model } from './model';
+import { ModelCollection } from './modelCollection';
 
 const rootUrl = 'http://localhost:3000/users';
 
@@ -18,5 +19,8 @@ export class User extends Model<UserProps> {
       new SimpleEventing(),
       new ApiSync(rootUrl)
     );
+  }
+  static buildUserCollection(): ModelCollection<User, UserProps> {
+    return new ModelCollection<User, UserProps>(rootUrl, User.buildUser);
   }
 }

@@ -1,13 +1,15 @@
 import axios, { AxiosResponse } from 'axios';
-import { User, UserProps } from './user';
 import { Eventing, Callback } from './model';
 import { SimpleEventing } from './simpleEventing';
 
-export class ModelCollection {
-  models: User[] = [];
+export class ModelCollection<T, TProps> {
+  models: T[] = [];
   events: Eventing = new SimpleEventing();
 
-  constructor(public rootUrl: string) {}
+  constructor(
+    public rootUrl: string,
+    public deserialize: (jsonData: TProps) => T
+  ) {}
 
   on(eventName: string, callback: Callback): void {
     this.events.on(eventName, callback);
@@ -19,9 +21,9 @@ export class ModelCollection {
 
   fetch(): void {
     axios.get(this.rootUrl).then((response: AxiosResponse) => {
-      response.data.forEach((value: UserProps) => {
-        const user = User.buildUser(value);
-        this.models.push(user);
+      response.data.forEach((value: TProps) => {
+        const model = this.deserialize(value);
+        this.models.push(model);
       });
       this.trigger('change');
     });
