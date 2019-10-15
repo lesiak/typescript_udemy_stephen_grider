@@ -20,5 +20,10 @@ const user = User.buildUser({ id: 1, name: 'John', age: 50 });
 // });
 // collection.fetch();
 
-const userForm = new UserForm(document.getElementById('root'), user);
-userForm.render();
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const userForm = new UserForm(rootElement, user);
+  userForm.render();
+} else {
+  throw new Error('Root element not found');
+}
