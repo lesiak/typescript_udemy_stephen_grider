@@ -1,10 +1,10 @@
-import { User } from '../models/user';
+import { Model, HasId } from '../models/model';
 
-export abstract class View {
+export abstract class View<T extends Model<K>, K extends HasId> {
   abstract template(): string;
   abstract eventsMap(): { [key: string]: () => void };
 
-  constructor(public parent: Element, public model: User) {
+  constructor(public parent: Element, public model: T) {
     this.model.on('change', () => {
       this.render();
     });
