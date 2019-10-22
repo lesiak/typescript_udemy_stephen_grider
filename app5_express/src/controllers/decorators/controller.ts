@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AppRouter } from '../../AppRouter';
+import { AppRouter } from '../../appRouter';
 
 export function controller(routePrefix: string) {
   return function(target: Function) {
