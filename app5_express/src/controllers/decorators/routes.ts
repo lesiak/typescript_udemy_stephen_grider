@@ -1,7 +1,17 @@
 import 'reflect-metadata';
+import { HttpMethod } from './httpMethod';
 
-export function get(path: string) {
-  return function(target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata('path', path, target, key);
+function routeBinder(method: string) {
+  return function(path: string) {
+    return function(target: any, key: string, desc: PropertyDescriptor) {
+      Reflect.defineMetadata('path', path, target, key);
+      Reflect.defineMetadata('method', method, target, key);
+    };
   };
 }
+
+export const get = routeBinder(HttpMethod.get);
+export const post = routeBinder(HttpMethod.post);
+export const put = routeBinder(HttpMethod.put);
+export const del = routeBinder(HttpMethod.del);
+export const patch = routeBinder(HttpMethod.patch);
