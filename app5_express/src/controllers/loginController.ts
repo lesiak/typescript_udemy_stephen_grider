@@ -12,6 +12,11 @@ interface RequestWithBody extends Request {
 
 @controller('/auth')
 export class LoginController {
+  // @get('/add')
+  // add(a: number, b: number): number {
+  //   return a + b;
+  // }
+
   @get('/login')
   @use(logger)
   getLogin(req: Request, res: Response): void {
