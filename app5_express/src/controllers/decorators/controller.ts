@@ -4,15 +4,15 @@ import { AppRouter } from '../../appRouter';
 import { HttpMethod } from './httpMethod';
 import { MetadataKey } from './metadataKey';
 
-function bodyValidators(keys: string): RequestHandler {
+function bodyValidators(keys: string[]): RequestHandler {
   return function(req: Request, res: Response, next: NextFunction) {
     if (!req.body) {
-      res.status(422).send('Invalid request');
+      res.status(422).send('Invalid request - no body');
       return;
     }
     for (let key of keys) {
       if (!req.body[key]) {
-        res.status(422).send('Invalid request');
+        res.status(422).send(`Invalid request missing ${key}`);
         return;
       }
     }
